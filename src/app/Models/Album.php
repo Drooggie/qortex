@@ -4,18 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Album extends Model
 {
 
-    protected $fillable = [
-        'title',
-    ];
+    protected $guarded = [];
 
-    public function songs(): HasMany
+    public function songs(): BelongsToMany
     {
-        return $this->hasMany(Song::class);
+        return $this->belongsToMany(Song::class)->withPivot('track_number');
     }
 
     public function artist(): BelongsTo

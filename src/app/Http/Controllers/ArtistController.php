@@ -21,16 +21,22 @@ class ArtistController extends Controller
     public function store(StoreRequest $request)
     {
         $artist = $request->validated();
-
         Artist::create($artist);
+
+        return response()->json([
+            'message' => 'Artist created'
+        ]);
     }
 
     public function update(UpdateRequest $request, Artist $artist)
     {
         $updated_artist = $request->validated();
         $artist->update($updated_artist);
+        Artist::make([$artist]);
 
-        Artist::make($artist);
+        return response()->json([
+            'message' => 'Artist info updated'
+        ]);
     }
 
     public function destroy(Artist $artist)

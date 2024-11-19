@@ -23,7 +23,7 @@ class UpdateRequest extends FormRequest
     {
         return [
             "title" => "required|string|max:255",
-            "artist_id"
+            "artist_id" => "required|integer|exists:artists,id"
         ];
     }
 }
