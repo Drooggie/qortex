@@ -1,10 +1,15 @@
-## Installation and setup
+## Installation and setup 
 
+### Installation and setup
+
+Run `docker compose up -d` for starting containers
+Move into php bash terminal `docker exec qortex_app /bin/bash`
+Run this commands:
 ```
-git clone https://github.com/Drooggie/qortex.git
-cd qortex
-
-docker compose up -d --build
+composer install 
+cp .env.example .env
+php artisan key:generate
+php artisan migrate:fresh --seed
 ```
 
-Api available on <a href="localhost:8080/api/artists">localhost:8080/api/artists</a>
+For last one move into <a href="http://localhost:8080/api/songs">localhost:8080/api/songs</a>

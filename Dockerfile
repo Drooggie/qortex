@@ -21,7 +21,10 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 COPY ./src /var/www
 
-RUN composer install
+RUN composer install \
+    cp .env.example .env \
+    php artisan key:generate \
+    php artisan migrate:fresh --seed
 
 EXPOSE 9000
 
