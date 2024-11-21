@@ -13,11 +13,14 @@ class AlbumController extends Controller
 {
     public function index(): JsonResponse
     {
-        $albums = Album::with('songs')->get();
+        $albums = Album::with(['songs' => function ($query) {
+            $query->withPivot('track_number');
+        }])->get();
 
+        // Return a JSON response with paginated album data
         return response()->json([
-            'data' => AlbumResource::collection($albums)
-        ], 200);
+            'data' => AlbumResource::collection($albums),
+        ]);
     }
 
     public function store(StoreRequest $request): JsonResponse
@@ -34,11 +37,12 @@ class AlbumController extends Controller
             "release_year" => $album_data["release_year"],
             "artist_id" => $album_data["artist_id"]
         ]);
+
         $album->songs()->attach($songsWithTrackNumbers);
 
         return response()->json([
             "message" => "Album was added",
-            "data" => new AlbumResource($album),
+            "data" => new AlbumResource($album->load('songs')),
         ]);
     }
 
@@ -57,17 +61,18 @@ class AlbumController extends Controller
         }
 
         $album->songs()->sync($updatedSongsWithTrackNumbers);
-        $album->load('songs');
 
         return response()->json([
             'message' => "You successfully updated album",
-            "data" => new AlbumResource($album)
+            "data" => new AlbumResource($album->load('songs'))
         ]);
     }
 
     public function show(Album $album): JsonResponse
     {
-        $album_data = Album::where("id", $album->id)->with("songs")->get();
+        $album_data = Album::where("id", $album->id)->with(['songs' => function ($query) {
+            $query->withPivot('track_number');
+        }])->get();
 
         return response()->json([
             'data' => AlbumResource::collection($album_data),

@@ -1,0 +1,227 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "qortex",
+        "version": "1.0"
+    },
+    "paths": {
+        "/api/": {},
+        "/api/albums": {
+            "get": {
+                "tags": [
+                    "Album"
+                ],
+                "summary": "Index method of Album controller",
+                "operationId": "9d34167d8709928c2b4c7b9a507db3ac",
+                "responses": {
+                    "200": {
+                        "description": "List of albums retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "description": "Array of albums",
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Album"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Album"
+                ],
+                "summary": "store method of Album Controller",
+                "operationId": "e14d18c13dc55c0e7bd086e9842297cc",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "properties": {
+                                            "title": {
+                                                "type": "string",
+                                                "example": "Album Title"
+                                            },
+                                            "release_year": {
+                                                "type": "string",
+                                                "example": "2001"
+                                            },
+                                            "artist_id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "songs": {
+                                                "type": "array",
+                                                "items": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "track_number": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Album was added",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Album was added"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/Album"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/albums/{id}": {
+            "get": {
+                "tags": [
+                    "Album"
+                ],
+                "summary": "Show method of AlbumController",
+                "operationId": "608e0f12b682ad60d518c716bc13a91b",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": "3"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/Album"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Album": {
+                "required": [
+                    "title",
+                    "release_year",
+                    "artist_id",
+                    "songs"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "The unique ID of the album",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "title": {
+                        "description": "The title of the album",
+                        "type": "string",
+                        "example": "Album Title"
+                    },
+                    "release_year": {
+                        "description": "The release year of the album",
+                        "type": "string",
+                        "example": "2001"
+                    },
+                    "artist_id": {
+                        "description": "The Artist_id property of Album",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "songs": {
+                        "description": "Songs in Album",
+                        "type": "array",
+                        "items": {
+                            "required": [
+                                "id",
+                                "track_number"
+                            ],
+                            "properties": {
+                                "id": {
+                                    "description": "The unique ID of the song",
+                                    "type": "integer",
+                                    "example": 1
+                                },
+                                "title": {
+                                    "description": "The Title of the song",
+                                    "type": "string",
+                                    "example": "Song Title"
+                                },
+                                "track_number": {
+                                    "description": "The track number of the song",
+                                    "type": "integer",
+                                    "example": 1
+                                }
+                            },
+                            "type": "object"
+                        }
+                    },
+                    "created_at": {
+                        "description": "Timestamp when the album was created",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "description": "Timestamp when the album was last updated",
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Album",
+            "description": "Album"
+        }
+    ]
+}
