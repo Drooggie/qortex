@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Album\StoreRequest;
 use App\Http\Requests\Album\UpdateRequest;
-use App\Http\Requests\Artist\UpdateRequest as ArtistUpdateRequest;
-use App\Http\Requests\Song\UpdateRequest as SongUpdateRequest;
 use App\Models\Album;
 use Illuminate\Http\Request;
 use App\Http\Resources\AlbumResource;
@@ -40,7 +38,7 @@ class AlbumController extends Controller
 
         return response()->json([
             "message" => "Album was added",
-            "data" => AlbumResource::collection($album),
+            "data" => new AlbumResource($album),
         ]);
     }
 
@@ -55,14 +53,15 @@ class AlbumController extends Controller
 
         $updatedSongsWithTrackNumbers = [];
         foreach ($updated_album['songs'] as $songData) {
-            $songsWithTrackNumbers[$songData['id']] = ['track_number' => $songData['track_number']];
+            $updatedSongsWithTrackNumbers[$songData['id']] = ['track_number' => $songData['track_number']];
         }
 
         $album->songs()->sync($updatedSongsWithTrackNumbers);
-
+        $album->load('songs');
 
         return response()->json([
-            'message' => "You successfully updated album"
+            'message' => "You successfully updated album",
+            "data" => new AlbumResource($album)
         ]);
     }
 

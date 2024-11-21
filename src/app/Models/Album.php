@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Album extends Model
 {
 
-    protected $guarded = [];
+    protected $guarded = false;
 
     public function songs(): BelongsToMany
     {
