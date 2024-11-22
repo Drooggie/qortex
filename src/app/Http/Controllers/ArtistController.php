@@ -6,44 +6,53 @@ use App\Http\Requests\Artist\StoreRequest;
 use App\Http\Requests\Artist\UpdateRequest;
 use App\Http\Resources\ArtistResource;
 use App\Models\Artist;
-use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 
 class ArtistController extends Controller
 {
 
-    public function index(Request $request)
+    public function index()
     {
         $artist = Artist::all();
 
         return ArtistResource::collection($artist);
     }
 
-    public function store(StoreRequest $request)
+    public function store(StoreRequest $request): JsonResponse
     {
-        $artist = $request->validated();
-        Artist::create($artist);
+        $artist_data = $request->validated();
+        $artist = Artist::create($artist_data);
 
         return response()->json([
-            'message' => 'Artist created'
+            'message' => 'Artist created',
+            "data" => new ArtistResource($artist)
         ]);
     }
 
     public function update(UpdateRequest $request, Artist $artist)
     {
         $updated_artist = $request->validated();
+
         $artist->update($updated_artist);
-        Artist::make([$artist]);
 
         return response()->json([
-            'message' => 'Artist info updated'
+            'message' => 'Artist info updated',
+            "data" => new ArtistResource($artist)
         ]);
+    }
+
+    public function show(Artist $artist): Object
+    {
+        $artist_data = Artist::findOrFail($artist->id);
+
+        return $artist_data;
     }
 
     public function destroy(Artist $artist)
     {
         $artist->delete();
         return response()->json([
-            'message' => 'Information Deleted'
+            'message' => 'You deleted artist information'
         ]);
     }
 }

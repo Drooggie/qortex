@@ -22,8 +22,8 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "title" => "required|string|max:255",
-            "artist_id" => "required|integer|exists:artists,id"
+            "title" => "string|max:255",
+            "artist_id" => "integer|exists:artists,id"
         ];
     }
 }

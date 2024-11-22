@@ -55,55 +55,17 @@ use App\Http\Controllers\Controller;
  *
  * @OA\Post(
  *      path="/api/albums",
- *      summary="store method of Album Controller",
+ *      summary="Store method of Album Controller",
  *      tags={"Album"},
  *
  *      @OA\RequestBody(
- *          @OA\JsonContent(
- *            allOf={
- *              @OA\Schema(
- *                  @OA\Property(
- *                    property="title",
- *                    type="string",
- *                    example="Album Title",
- *                  ),
- *                  @OA\Property(
- *                    property="release_year",
- *                    type="string",
- *                    example="2001"
- *                  ),
- *                  @OA\Property(
- *                    property="artist_id",
- *                    type="integer",
- *                    example=1,
- *                  ),
- *                  @OA\Property(
- *                    property="songs",
- *                    type="array",
- *                    @OA\Items(
- *                      type="object",
- *                      @OA\Property(
- *                        property="id",
- *                        type="integer",
- *                        example=1
- *                      ),
- *                      @OA\Property(
- *                        property="track_number",
- *                        type="integer",
- *                        example=1
- *                      )
- *                    )
- *                  )
- *              )
- *          }
- *          )
+ *          @OA\JsonContent(ref="#/components/schemas/RequestBodyAlbum")
  *      ),
  *     @OA\Response(
  *         response=200,
  *         description="Album was added",
  *
  *          @OA\JsonContent(
- *              type="object",
  *              @OA\Property(
  *                 property="message",
  *                 type="string",
@@ -116,6 +78,67 @@ use App\Http\Controllers\Controller;
  *         )
  *     ),
  * ),
+ *
+ *
+ * @OA\Patch(
+ *   path="/api/albums/{id}",
+ *   summary="Update method of AlbumController",
+ *   tags={"Album"},
+ *
+ *   @OA\Parameter(
+ *     name="id",
+ *     in="path",
+ *     required=true,
+ *     @OA\Schema(type="integer", example="3")
+ *   ),
+ *
+ *   @OA\RequestBody(
+ *     @OA\JsonContent(ref="#/components/schemas/RequestBodyAlbum")
+ *   ),
+ *
+ *   @OA\Response(
+ *     response=200,
+ *     description="OK",
+ *     @OA\JsonContent(
+ *         @OA\Property(
+ *           property="message",
+ *           type="string",
+ *           example="You successfully updated album"
+ *         ),
+ *         @OA\Property(
+ *           property="data",
+ *           ref="#/components/schemas/Album"
+ *         )
+ *     )
+ *   )
+ * ),
+ *
+ *
+ * @OA\Delete(
+ *   path="/api/albums/{id}",
+ *   summary="Destroy method of AlbumController",
+ *   tags={"Album"},
+ *
+ *   @OA\Parameter(
+ *     name="id",
+ *     in="path",
+ *     required=true,
+ *     @OA\Schema(type="integer", example="3")
+ *   ),
+ *
+ *   @OA\Response(
+ *     response=200,
+ *     description="You successfully deleted album",
+ *     @OA\JsonContent(
+ *         @OA\Property(
+ *           property="message",
+ *           type="string",
+ *           example="Album was deleted"
+ *         )
+ *     )
+ *   )
+ * ),
+ *
  *
  * @OA\Schema(
  *     schema="Album",
@@ -184,7 +207,44 @@ use App\Http\Controllers\Controller;
  *         format="date-time",
  *         description="Timestamp when the album was last updated"
  *     )
- * )
+ * ),
+ *
+ * @OA\Schema(
+ *   schema="RequestBodyAlbum",
+ *   type="object",
+ *   @OA\Property(
+ *     property="title",
+ *     type="string",
+ *     example="Album Title",
+ *   ),
+ *   @OA\Property(
+ *     property="release_year",
+ *     type="string",
+ *     example="2001"
+ *   ),
+ *   @OA\Property(
+ *     property="artist_id",
+ *     type="integer",
+ *     example=1,
+ *   ),
+ *   @OA\Property(
+ *     property="songs",
+ *     type="array",
+ *     @OA\Items(
+ *       type="object",
+ *       @OA\Property(
+ *         property="id",
+ *         type="integer",
+ *         example=1
+ *       ),
+ *       @OA\Property(
+ *         property="track_number",
+ *         type="integer",
+ *         example=1
+ *       )
+ *     )
+ *   )
+ * ),
  */
 
 

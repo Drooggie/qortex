@@ -2,8 +2,10 @@
 
 ### Installation and setup
 
-Run `docker compose up -d` for starting containers
-Move into php bash terminal `docker exec qortex_app /bin/bash`
+Run `docker compose up -d` for starting containers <br />
+Move into php bash terminal `docker exec qortex_app /bin/bash` <br />
+<br />
+
 Run this commands:
 ```
 composer install 

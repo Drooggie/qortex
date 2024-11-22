@@ -39,47 +39,13 @@
                 "tags": [
                     "Album"
                 ],
-                "summary": "store method of Album Controller",
+                "summary": "Store method of Album Controller",
                 "operationId": "e14d18c13dc55c0e7bd086e9842297cc",
                 "requestBody": {
                     "content": {
                         "application/json": {
                             "schema": {
-                                "allOf": [
-                                    {
-                                        "properties": {
-                                            "title": {
-                                                "type": "string",
-                                                "example": "Album Title"
-                                            },
-                                            "release_year": {
-                                                "type": "string",
-                                                "example": "2001"
-                                            },
-                                            "artist_id": {
-                                                "type": "integer",
-                                                "example": 1
-                                            },
-                                            "songs": {
-                                                "type": "array",
-                                                "items": {
-                                                    "properties": {
-                                                        "id": {
-                                                            "type": "integer",
-                                                            "example": 1
-                                                        },
-                                                        "track_number": {
-                                                            "type": "integer",
-                                                            "example": 1
-                                                        }
-                                                    },
-                                                    "type": "object"
-                                                }
-                                            }
-                                        },
-                                        "type": "object"
-                                    }
-                                ]
+                                "$ref": "#/components/schemas/RequestBodyAlbum"
                             }
                         }
                     }
@@ -134,6 +100,487 @@
                                     "properties": {
                                         "data": {
                                             "$ref": "#/components/schemas/Album"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Album"
+                ],
+                "summary": "Destroy method of AlbumController",
+                "operationId": "c424fab7e805b080caf97fbcd0e49722",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": "3"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "You successfully deleted album",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Album was deleted"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Album"
+                ],
+                "summary": "Update method of AlbumController",
+                "operationId": "286d8d7d3df3eb62ac6c88416551b70d",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": "3"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RequestBodyAlbum"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "You successfully updated album"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/Album"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/artists/": {
+            "get": {
+                "tags": [
+                    "Artist"
+                ],
+                "summary": "Index method of Artist Controller",
+                "operationId": "6b9dcfc8e1801f97e460c18456b37c7d",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Artist"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Artist"
+                ],
+                "summary": "Show method of Artist Controller",
+                "operationId": "aaf268d1bbb6c3f78437084d5235be40",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Artist name"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "You successfully created Artist info"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/Artist"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/artists/{id}": {
+            "get": {
+                "tags": [
+                    "Artist"
+                ],
+                "summary": "Show method of Artist Controller",
+                "operationId": "faf358a3f6283fb7a0ebea0c7ce72451",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Artist"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Artist"
+                ],
+                "summary": "Destroy method of Artist Controller",
+                "operationId": "d65d61eb7bbd66e69accafa95941e060",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "You deleted artist information"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Artist"
+                ],
+                "summary": "Update method of Artist Controller",
+                "operationId": "0e4463a1be0d3157e4c62ebf06f62ecb",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Artist name"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Artist info updated"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/Artist"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/songs/": {
+            "get": {
+                "tags": [
+                    "Song"
+                ],
+                "summary": "Index method of Song Controller",
+                "operationId": "ee4a090a823e9e22c3c9b9974becd45d",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Song"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Song"
+                ],
+                "summary": "Store method of Song Controller",
+                "operationId": "628b1fe13c9506114ea7c142671c66f4",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RequestBodySong"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Song information was added"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/Song"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/songs/{id}": {
+            "get": {
+                "tags": [
+                    "Song"
+                ],
+                "summary": "Show method of Song Controller",
+                "operationId": "01f0d2659ad1bbb90f942612819f7e35",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/Song"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Song"
+                ],
+                "summary": "Destroy method of Song Controller",
+                "operationId": "9add734b205174d63e934baac33971bf",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Song was deleted"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Song"
+                ],
+                "summary": "Update method of Song Controller",
+                "operationId": "dfd6827895d6aa31d154b49ec1f6851a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RequestBodySong"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Song was updated"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/Song"
                                         }
                                     },
                                     "type": "object"
@@ -215,6 +662,103 @@
                     }
                 },
                 "type": "object"
+            },
+            "RequestBodyAlbum": {
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "example": "Album Title"
+                    },
+                    "release_year": {
+                        "type": "string",
+                        "example": "2001"
+                    },
+                    "artist_id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "songs": {
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer",
+                                    "example": 1
+                                },
+                                "track_number": {
+                                    "type": "integer",
+                                    "example": 1
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "Artist": {
+                "properties": {
+                    "id": {
+                        "description": "The unique ID of artist",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Artist name"
+                    },
+                    "created_at": {
+                        "description": "Timestamp when the album was created",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "description": "Timestamp when the album was last updated",
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "Song": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "title": {
+                        "type": "string",
+                        "example": "Song Title"
+                    },
+                    "artist_id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "created_at": {
+                        "description": "Timestamp when the album was created",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "description": "Timestamp when the album was last updated",
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "RequestBodySong": {
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "example": "Song Title"
+                    },
+                    "artist_id": {
+                        "type": "integer",
+                        "example": 1
+                    }
+                },
+                "type": "object"
             }
         }
     },
@@ -222,6 +766,14 @@
         {
             "name": "Album",
             "description": "Album"
+        },
+        {
+            "name": "Artist",
+            "description": "Artist"
+        },
+        {
+            "name": "Song",
+            "description": "Song"
         }
     ]
 }

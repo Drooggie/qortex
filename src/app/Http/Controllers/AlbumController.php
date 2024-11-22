@@ -8,6 +8,7 @@ use App\Models\Album;
 use Illuminate\Http\Request;
 use App\Http\Resources\AlbumResource;
 use Illuminate\Http\JsonResponse;
+use PhpParser\Node\Expr\Cast\Object_;
 
 class AlbumController extends Controller
 {
@@ -68,15 +69,13 @@ class AlbumController extends Controller
         ]);
     }
 
-    public function show(Album $album): JsonResponse
+    public function show(Album $album): Object
     {
-        $album_data = Album::where("id", $album->id)->with(['songs' => function ($query) {
+        $album_data = Album::with(['songs' => function ($query) {
             $query->withPivot('track_number');
-        }])->get();
+        }])->findOrFail($album->id);
 
-        return response()->json([
-            'data' => AlbumResource::collection($album_data),
-        ]);
+        return new AlbumResource($album_data);
     }
 
     public function destroy(Album $album): JsonResponse

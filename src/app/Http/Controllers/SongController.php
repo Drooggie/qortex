@@ -6,6 +6,7 @@ use App\Http\Requests\Song\UpdateRequest;
 use App\Http\Requests\Song\StoreRequest;
 use App\Http\Resources\SongResource;
 use App\Models\Song;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class SongController extends Controller
@@ -13,39 +14,44 @@ class SongController extends Controller
 
     public function index()
     {
-        $song = Song::all();
+        $songs = Song::all();
 
-        return SongResource::collection($song);
+        return SongResource::collection($songs);
     }
 
-    public function store(StoreRequest $request)
+    public function store(StoreRequest $request): JsonResponse
     {
-        $song = $request->validated();
+        $song_data = $request->validated();
 
-        Song::create($song);
+        $song = Song::create($song_data);
 
         return response()->json([
-            'message' => 'Song added'
+            'message' => 'Song added',
+            "data" => new SongResource($song),
         ]);
     }
 
-    public function update(UpdateRequest $request, Song $song)
+    public function update(UpdateRequest $request, Song $song): JsonResponse
     {
         $updated_song = $request->validated();
+
         $song->update($updated_song);
-        Song::make([$song]);
+        $song->save();
 
         return response()->json([
-            'message' => 'Song info was updated'
+            'message' => 'Song info was updated',
+            'data' => new SongResource($song),
         ]);
     }
 
-    public function show(Song $song)
+    public function show(Song $song): Object
     {
-        return Song::where('id', $song->id)->get();
+        $song_data = Song::findOrFail($song->id);
+
+        return new SongResource($song_data);
     }
 
-    public function destroy(Song $song)
+    public function destroy(Song $song): JsonResponse
     {
         $song->delete();
         return response()->json([

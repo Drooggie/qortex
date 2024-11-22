@@ -22,10 +22,10 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string|max:255',
-            'artist_id' => 'required|exists:artists,id',
-            'release_year' => 'required|digits:4|integer|min:1900|max:' . (date('Y') + 1),
-            'songs' => 'required|array',
+            'title' => 'string|max:255',
+            'artist_id' => 'exists:artists,id',
+            'release_year' => 'digits:4|integer|min:1900|max:' . (date('Y') + 1),
+            'songs' => 'array',
             'songs.*.id' => 'required|exists:songs,id',
             'songs.*.track_number' => 'required|integer|min:1'
         ];
