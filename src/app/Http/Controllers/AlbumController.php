@@ -5,13 +5,12 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Album\StoreRequest;
 use App\Http\Requests\Album\UpdateRequest;
 use App\Models\Album;
-use Illuminate\Http\Request;
 use App\Http\Resources\AlbumResource;
 use Illuminate\Http\JsonResponse;
-use PhpParser\Node\Expr\Cast\Object_;
 
 class AlbumController extends Controller
 {
+
     public function index(): JsonResponse
     {
         $albums = Album::with(['songs' => function ($query) {

@@ -7,7 +7,6 @@ use App\Http\Requests\Song\StoreRequest;
 use App\Http\Resources\SongResource;
 use App\Models\Song;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class SongController extends Controller
 {

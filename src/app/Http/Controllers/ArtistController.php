@@ -29,7 +29,7 @@ class ArtistController extends Controller
         ]);
     }
 
-    public function update(UpdateRequest $request, Artist $artist)
+    public function update(UpdateRequest $request, Artist $artist): JsonResponse
     {
         $updated_artist = $request->validated();
 
@@ -48,7 +48,7 @@ class ArtistController extends Controller
         return $artist_data;
     }
 
-    public function destroy(Artist $artist)
+    public function destroy(Artist $artist): JsonResponse
     {
         $artist->delete();
         return response()->json([
