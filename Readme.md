@@ -2,11 +2,22 @@
 
 ### Installation and setup
 
-Clone Repository `git clone https://github.com/Drooggie/qortex.git` <br />
-Move into Repository `cd qortex` <br />
+Clone Repository 
+```
+git clone https://github.com/Drooggie/qortex.git
+``` 
+<br />
+Move into Repository 
+```
+cd qortex
+``` 
+<br />
 <br />
 
-Run `docker compose up -d --build` for starting and building containers <br />
+Run this command for starting and building containers
+```
+docker compose up -d --build
+```  
 <br />
 
 Run this commands for migration:
